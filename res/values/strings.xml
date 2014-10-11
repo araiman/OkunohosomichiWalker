@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">散歩計 - 試練2</string>
+    <string name="app_name">奥の細道ウォーカー</string>
     <string name="button_start">開始</string>
     <string name="button_stop">停止</string>
     <string name="label_counter">歩</string>
-    <string name="label_counter_first">0歩</string>
-    
     <string name="label_counter2">m</string>
-       <string name="label_counter_first2">0m</string> 
 
 </resources>

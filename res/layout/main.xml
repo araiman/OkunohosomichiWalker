@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -8,24 +11,70 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
+        android:layout_gravity="center_horizontal"
+        android:background="#F8F8F8"
         android:orientation="vertical"
         android:layout_weight="1">
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#0000ff"
+            android:id="@+id/today_steps"
+            android:layout_width="288dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.50"
+            
+            
+            android:background="#2FCDB4"
             android:gravity="center"
-            android:text=""
+            android:text="今日の歩数"
+            android:textSize="25sp"
+            android:textColor="#F8F8F8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            
+            android:gravity="center"
+            
+            android:background="#F8F8F8"
+            
+            android:text="000歩"
+            android:textSize="50sp"
+            android:textColor="#202223"
+            
             android:id="@+id/text_sensor"/>
         
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#0000ff"
+            android:id="@+id/today_distance"
+            android:layout_width="288dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.50"
+            android:background="#2FCDB4"
             android:gravity="center"
-            android:text=""
-            android:id="@+id/text_sensor_distance"/>
+            
+            android:text="距離"
+            android:textSize="25sp"
+            android:textColor="#F8F8F8" />
+
+        <TextView
+            android:id="@+id/text_sensor_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            
+            android:gravity="center"
+            
+            android:background="#F8F8F8"
+
+            android:text="000m"
+            android:textSize="50sp"
+            android:textColor="#202223" />
 
     </LinearLayout>
 
@@ -37,15 +86,19 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#2FCDB4"
             android:id="@+id/button_start"
             android:text="@string/button_start"
+            android:textColor="#F8F8F8"
             android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+android:background="#2FCDB4"
             android:id="@+id/button_stop"
             android:text="@string/button_stop"
+			android:textColor="#F8F8F8"
             android:layout_weight="1"/>
 
     </LinearLayout>
