@@ -8,12 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 
 public class WalkMeterActivity extends Activity implements OnClickListener {
@@ -21,11 +25,11 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
     private TextView mSensorTextView2;
 
     private Button mStartButton;
-
     private Button mStopButton;
     
     WalkMeterSQLiteOpenHelper db;
 
+    
  private class WalkMeterReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -51,6 +55,14 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
             mWalkMeterService = null;
         }
     };
+    
+    
+    //Preferenceの値
+    
+    private SharedPreferences preference;
+    
+    private Editor editor;
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +76,22 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
         mStopButton.setOnClickListener(this);
         
         db = new WalkMeterSQLiteOpenHelper(this);
+        
+        //プリファレンスの準備
+        preference = getSharedPreferences("name_and_height", MODE_PRIVATE);
+        editor = preference.edit();
+        
+      //初回起動だけの処理
+        if(preference.getBoolean("Launched", false)==false){
+        	Intent intent = new Intent();
+        	intent.setClassName("com.notnewarai.walkmeter","com.notnewarai.walkmeter.FirstSetting");
+        	startActivity(intent);
+        	
+        	//Launchedの書き換え（2回目以降は、設定しなくてもいいように）
+        	editor.putBoolean("Launched", true);
+        	editor.commit();
+        	
+        }
     }
 
     @Override
@@ -83,7 +111,8 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
 
     public void screenDisplay() {
         mSensorTextView.setText(mWalkMeterService.getCounter() + getString(R.string.label_counter));
-        mSensorTextView2.setText(mWalkMeterService.getCounter()* 0.45 + getString(R.string.label_counter2)); 
+        //身長を設定出来るようになり次第、getCounter()* 身長　* 0.45
+        mSensorTextView2.setText(mWalkMeterService.getCounter()* getHeight(this) * 0.45 + getString(R.string.label_counter2)); 
     }
 
     @Override
@@ -111,5 +140,13 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
                 mWalkMeterService.stopCount();
                 break;
         }
+    }
+    
+    public int getHeight(Context context){
+    	SharedPreferences pref = context.getSharedPreferences( "name_and_height", Context.MODE_PRIVATE );
+    	
+    	String strHeight = pref.getString("user_height", "-1");
+    	
+    	return Integer.parseInt(strHeight);
     }
 }
