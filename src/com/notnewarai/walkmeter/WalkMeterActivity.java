@@ -2,6 +2,7 @@
 package com.notnewarai.walkmeter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -108,14 +109,22 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
 
     public void startDisplay() {
         	if (mWalkMeterService.getState()) {
-            screenDisplay();
+            screenDisplay(this);
         }
     }
 
-    public void screenDisplay() {
+    public void screenDisplay(Context context) {
         mSensorTextView.setText(mWalkMeterService.getCounter() + getString(R.string.label_counter));
         //身長を設定出来るようになり次第、getCounter()* 身長　* 0.45
-        mSensorTextView2.setText(calcDistance() + getString(R.string.label_counter2)); 
+        mSensorTextView2.setText(calcDistance(mWalkMeterService.getCounter()) + getString(R.string.label_counter2));
+        if(calcDistance(mWalkMeterService.getCounter()+db.getAllHistorySteps()) >= 2400 ){
+        	SharedPreferences pref = context.getSharedPreferences( "name_and_height", Context.MODE_PRIVATE );
+       
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        	builder.setTitle("ゴール！！")
+        		.setMessage(String.format("おめでとう%sさん",pref.getString("user_name", "名無し")))
+        		.show();
+        }
     }
 
     @Override
@@ -146,9 +155,9 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
     }
     
     
-    public double calcDistance(){
+    public double calcDistance(int counter){
     	
-    	double km_distance = mWalkMeterService.getCounter()* getHeight(this) * 0.45 / 100000;
+    	double km_distance = counter * getHeight(this) * 0.45 / 100000;
     	
     	BigDecimal bd_km_distance = new BigDecimal(km_distance);
     	
@@ -165,5 +174,10 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
     	String strHeight = pref.getString("user_height", "-1");
     	
     	return Integer.parseInt(strHeight);
+    }
+    
+    public double complete(int sum_counter){
+    	double sum_distance = calcDistance(sum_counter);
+    	return sum_distance;
     }
 }

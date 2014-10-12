@@ -1,5 +1,6 @@
 package com.notnewarai.walkmeter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.notnewarai.walkmeter.util.WalkMeterUtils;
@@ -35,7 +36,7 @@ public class WalkMeterSQLiteOpenHelper extends SQLiteOpenHelper {
 		        stmt.executeInsert();
 		 
 		        // 歩数履歴作成
-		        db.execSQL("CREATE TABLE WALK_METER_HISTORY (HISTORY_DATE TEXT PRIMARY KEY, SUM_STEPS INTEGER)");
+		        db.execSQL("CREATE TABLE WALK_METER_HISTORY (HISTORY_DATE TEXT PRIMARY KEY, HISTORY_STEPS INTEGER)");
 		 
 		        db.setTransactionSuccessful();
 		    } finally {
@@ -77,5 +78,35 @@ public class WalkMeterSQLiteOpenHelper extends SQLiteOpenHelper {
 	    } finally {
 	        db.endTransaction();
 	    }
+	}
+	
+	public int getAllHistorySteps(){
+		ArrayList<Integer> all_history_steps= new ArrayList<Integer>();
+		int sum_history_steps = 0;
+		
+		final SQLiteDatabase db = this.getReadableDatabase();
+		
+		
+		// テーブルからデータを検索
+		Cursor cursor = db.query(
+		"WALK_METER_HISTORY", new String[] {"HISTORY_STEPS"}, 
+		null, null, null, null, null);
+		// 参照先を先頭に
+		boolean exist = cursor.moveToFirst();
+		// 全歩数を取得
+		while(exist) {
+		
+		all_history_steps.add(cursor.getInt(cursor.getColumnIndex("HISTORY_STEPS")));
+		exist = cursor.moveToNext();
+		}
+		// に閉じる
+		cursor.close();
+		
+		for(int i=0;i<=all_history_steps.size();i++){
+			sum_history_steps += all_history_steps.get(i); 
+		}
+		
+		return sum_history_steps;
+
 	}
 }
