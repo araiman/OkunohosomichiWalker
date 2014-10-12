@@ -8,16 +8,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import java.math.BigDecimal;
 
 
 public class WalkMeterActivity extends Activity implements OnClickListener {
@@ -112,7 +115,7 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
     public void screenDisplay() {
         mSensorTextView.setText(mWalkMeterService.getCounter() + getString(R.string.label_counter));
         //身長を設定出来るようになり次第、getCounter()* 身長　* 0.45
-        mSensorTextView2.setText(mWalkMeterService.getCounter()* getHeight(this) * 0.45 + getString(R.string.label_counter2)); 
+        mSensorTextView2.setText(calcDistance() + getString(R.string.label_counter2)); 
     }
 
     @Override
@@ -140,6 +143,20 @@ public class WalkMeterActivity extends Activity implements OnClickListener {
                 mWalkMeterService.stopCount();
                 break;
         }
+    }
+    
+    
+    public double calcDistance(){
+    	
+    	double km_distance = mWalkMeterService.getCounter()* getHeight(this) * 0.45 / 100000;
+    	
+    	BigDecimal bd_km_distance = new BigDecimal(km_distance);
+    	
+    	BigDecimal down_bd_km_distance = bd_km_distance.setScale(1, BigDecimal.ROUND_DOWN);
+    	
+    	double distance = down_bd_km_distance.doubleValue();
+    	
+    	return distance;
     }
     
     public int getHeight(Context context){
