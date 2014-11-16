@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_gravity="center_horizontal"
+        android:background="#F5F5F5"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/dummyImageView"
+            android:layout_width="fill_parent"
+            android:layout_height="280dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/okunohosomichi" />
+    
+   		 <TextView 
+        	android:id="@+id/dummyTextView"
+        	android:textColor="#737373"
+        	android:textSize="20sp"
+        	
+        	android:gravity="center"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginTop="10dp"
+        	
+        	android:text="東京なう"/>
+   		 
+   		 <TextView 
+        	android:id="@+id/dummyTextView2"
+        	
+        	android:textColor="#808080"
+        	android:textSize="15sp"
+        	
+        	android:gravity="center"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginTop="10dp"
+
+        	
+        	android:text="俳句はここ"/>
+   		 
+    
+    </LinearLayout>
+    
+</LinearLayout>

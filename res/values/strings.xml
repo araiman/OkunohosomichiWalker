@@ -4,7 +4,25 @@
     <string name="app_name">奥の細道ウォーカー</string>
     <string name="button_start">開始</string>
     <string name="button_stop">停止</string>
-    <string name="label_counter">歩</string>
-    <string name="label_counter2">km</string>
+    <string name="label_counter"></string>
+    <string name="label_counter2"></string>
+    <string-array name="where_items">
+        <item>1.東京 34km</item>
+        <item>2.栃木 280.5km</item>
+        <item>3.福島 157.5km</item>
+        <item>4.宮城 201.5km</item>
+        <item>5.岩手 63km</item>
+        <item>6.宮城 74km</item>
+        <item>7.秋田 9km</item>
+        <item>8.山形 321.5km</item>
+        <item>9.秋田 13km</item>
+        <item>10.山形 94km</item>
+        <item>11.新潟 343.5km</item>
+        <item>12.富山 84km</item>
+        <item>13.石川 205.5km</item>
+        <item>14.福井 149.5km</item>
+        <item>15.岐阜 76km</item>
+    </string-array>
+    
 
 </resources>
